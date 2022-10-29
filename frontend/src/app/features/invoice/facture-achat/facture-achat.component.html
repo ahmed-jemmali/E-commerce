@@ -1,0 +1,68 @@
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>View Purchase Invoice</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+        <li class="breadcrumb-item active"><a routerLink="../../../invoice/all/purchase">Purchase Invoices</a></li>
+        <li class="breadcrumb-item active">Purchase Invoice</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Supplier Details</h5>
+            <div class="table-responsive">
+              <table class="table table-bordered border-primary">
+                <thead>
+                <tr>
+                  <th scope="col">Name : {{dataSource?.name}}</th>
+                  <th scope="col">Address : {{dataSource?.address}}</th>
+                </tr>
+                <tr>
+                  <th scope="col">Contact Number : {{dataSource?.contactNumber}}</th>
+                  <th scope="col">Email : {{dataSource?.email}}</th>
+                </tr>
+                </thead>
+              </table>
+            </div>
+            <h5 class="card-title">Products Details</h5>
+            <div class="table-responsive">
+              <table class="table table-bordered border-primary">
+                <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Payment Method</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let d of data$ | async">
+                  <th scope="row">{{d.name}}</th>
+                  <td>{{d.category}}</td>
+                  <td>{{d.quantity}}</td>
+                  <td>{{d.paymentMethod}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-warning" routerLink="../../../invoice/all/purchase"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+
+

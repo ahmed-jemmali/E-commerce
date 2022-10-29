@@ -1,0 +1,81 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Manage Role</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+        <li class="breadcrumb-item active">Role</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Create Role</h5>
+
+            <form class="row mb-2" [formGroup]="addRoleForm" *ngIf="role$ | async as role">
+              <!-- <label for="inputText" class="col-sm-2 col-form-label">Text</label> -->
+              <div class="col-sm-12 pb-2">
+                <input type="text" name="role" id="addRole" class="form-control" formControlName="role"
+                       [(ngModel)]="role.role">
+                <div class="pt-1" *ngIf='addRoleForm.controls["role"].invalid
+                                          && (addRoleForm.controls["role"].dirty||
+                                          addRoleForm.controls["role"].touched)'>
+                  <div *ngIf='addRoleForm.controls["role"].errors.required' style="color: red;">
+                    This field is mandatory
+                  </div>
+                </div>
+              </div>
+              <span class="" id="msgError"></span>
+              <div class="text-rigth mt-1">
+                <button (click)="addRole()" type="submit" [disabled]="!(addRoleForm.valid && addRoleForm.dirty)"
+                        class="btn btn-primary me-2">Add
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <!-- <h5 class="card-title">All Roles</h5> -->
+            <div class="row">
+              <div class="py-3 col-sm-5">
+                <!--<form>
+                  <input type="text" placeholder="Search" class="form-control" title="Enter search keyword">
+                </form>-->
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered border-primary">
+                <thead>
+                <tr>
+                  <th scope="col">Role</th>
+                  <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let r of roles$ | async">
+                  <th scope="row">{{r.role}}</th>
+                  <td>
+                    <a (click)="deleteRole(r._id)" class="btn btn-danger btn-sm" title="Remove role"><i
+                      class="bi bi-trash"></i></a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+

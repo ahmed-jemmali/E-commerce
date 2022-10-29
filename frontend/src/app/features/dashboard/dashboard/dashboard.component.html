@@ -1,0 +1,267 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section dashboard">
+    <div class="row">
+
+      <div class="col-lg-3 col-md-4">
+        <div class="card info-card revenue-card">
+          <div class="card-body">
+            <h5 class="card-title">Users <span>| Today</span></h5>
+
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-people"></i>
+              </div>
+              <div class="ps-3">
+                <h6>{{data?.user}}</h6>
+                <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span
+                            class="text-muted small pt-2 ps-1">increase</span> -->
+              </div>
+            </div>
+          </div>
+          <div class="d-grid gap-2 px-3">
+            <button  *ngIf="checkRole(['super admin'],roles)" routerLink="../../admin/all-users" class="btn btn-primary"  type="button">View Users</button>
+            <button *ngIf="!checkRole(['super admin'],roles)" [disabled]="true" routerLink="../../admin/all-users" class="btn btn-primary"  type="button">View Users</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-4">
+        <div class="card info-card revenue-card">
+          <div class="card-body">
+            <h5 class="card-title">Sale Products <span>| Today</span></h5>
+
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-cart"></i>
+              </div>
+              <div class="ps-3">
+                <h6>{{data?.saleProduct}}</h6>
+                <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span
+                            class="text-muted small pt-2 ps-1">increase</span> -->
+              </div>
+            </div>
+          </div>
+          <div class="d-grid gap-2 px-3">
+            <button *ngIf="checkRole(['super admin','sales manager'],roles)" routerLink="../../stock/product/sale" class="btn btn-primary"  type="button">View Sale Products</button>
+            <button *ngIf="!checkRole(['super admin','sales manager'],roles)" [disabled]="true" routerLink="../../stock/product/sale" class="btn btn-primary"  type="button">View Sale Products</button>
+          </div>
+        </div>
+      </div>
+
+      <!--<div class="col-xxl-3 col-md-3">
+        <div class="card info-card sales-card">
+          <div class="card-body">
+            <h5 class="card-title">Sale Products <span>| Today</span></h5>
+
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-cart"></i>
+              </div>
+              <div class="ps-3">
+                <h6>{{data?.category}}</h6>
+                &lt;!&ndash; <span class="text-success small pt-1 fw-bold">12%</span> <span
+                            class="text-muted small pt-2 ps-1">increase</span> &ndash;&gt;
+              </div>
+            </div>
+          </div>
+          <div class="d-grid gap-2 px-3">
+            <button class="btn btn-primary" type="button">View Sale Products</button>
+          </div>
+        </div>
+      </div>-->
+
+      <div class="col-lg-3 col-md-4">
+        <div class="card info-card revenue-card">
+          <div class="card-body">
+            <h5 class="card-title">Sale Invoices <span>| Today</span></h5>
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-currency-dollar"></i>
+              </div>
+              <div class="ps-3">
+                <h6>{{data?.saleInvoice}}</h6>
+                <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span
+                            class="text-muted small pt-2 ps-1">increase</span> -->
+              </div>
+            </div>
+          </div>
+          <div class="d-grid gap-2 px-3">
+            <button *ngIf="checkRole(['super admin','sales manager'],roles)" routerLink="../../invoice/all/sale" class="btn btn-primary" type="button">View Sale Invoices</button>
+            <button  *ngIf="!checkRole(['super admin','sales manager'],roles)" disabled="disabled" routerLink="../../invoice/all/sale" class="btn btn-primary" type="button">View Sale Invoices</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-4">
+        <div class="card info-card revenue-card">
+          <div class="card-body">
+            <h5 class="card-title">Clients <span>| Today</span></h5>
+
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-people"></i>
+              </div>
+              <div class="ps-3">
+                <h6>{{data?.client}}</h6>
+                <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span
+                            class="text-muted small pt-2 ps-1">increase</span> -->
+              </div>
+            </div>
+          </div>
+          <div class="d-grid gap-2 px-3">
+            <button *ngIf="checkRole(['super admin','sales manager'],roles)" routerLink="../../sale/client"  class="btn btn-primary" type="button">View Clients</button>
+            <button *ngIf="!checkRole(['super admin','sales manager'],roles)" disabled="disabled" routerLink="../../sale/client"  class="btn btn-primary" type="button">View Clients</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4">
+        <div class="card info-card revenue-card">
+          <div class="card-body">
+            <h5 class="card-title">Purchase Products <span>| Today</span></h5>
+
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-cart"></i>
+              </div>
+              <div class="ps-3">
+                <h6>{{data?.purchaseProduct}}</h6>
+                <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span
+                            class="text-muted small pt-2 ps-1">increase</span> -->
+              </div>
+            </div>
+          </div>
+          <div class="d-grid gap-2 px-3">
+            <button *ngIf="checkRole(['super admin','purchase manager'],roles)" routerLink="../../stock/product/purchase"  class="btn btn-primary" type="button">View Purchase Products</button>
+            <button *ngIf="!checkRole(['super admin','purchase manager'],roles)"  disabled="disabled" routerLink="../../stock/product/purchase"  class="btn btn-primary" type="button">View Purchase Products</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4">
+        <div class="card info-card revenue-card">
+          <div class="card-body">
+            <h5 class="card-title">Purchase Invoices <span>| Today</span></h5>
+
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-currency-dollar"></i>
+              </div>
+              <div class="ps-3">
+                <h6>{{data?.purchaseInvoice}}</h6>
+                <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span
+                            class="text-muted small pt-2 ps-1">increase</span> -->
+              </div>
+            </div>
+          </div>
+          <div class="d-grid gap-2 px-3">
+            <button *ngIf="checkRole(['super admin','purchase manager'],roles)" routerLink="../../invoice/all/purchase" class="btn btn-primary"  type="button">View Purchase Invoices</button>
+            <button *ngIf="!checkRole(['super admin','purchase manager'],roles)" disabled="disabled"  routerLink="../../invoice/all/purchase" class="btn btn-primary"  type="button">View Purchase Invoices</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4">
+        <div class="card info-card revenue-card">
+          <div class="card-body">
+            <h5 class="card-title">Suppliers <span>| Today</span></h5>
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-people"></i>
+              </div>
+              <div class="ps-3">
+                <h6>{{data?.supplier}}</h6>
+                <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span
+                            class="text-muted small pt-2 ps-1">increase</span> -->
+
+              </div>
+            </div>
+          </div>
+          <div class="d-grid gap-2 px-3">
+            <button *ngIf="checkRole(['super admin','purchase manager'],roles)" routerLink="../../purchase/supplier" class="btn btn-primary" type="button">View Suppliers</button>
+            <button *ngIf="!checkRole(['super admin','purchase manager'],roles)" disabled="disabled" routerLink="../../purchase/supplier" class="btn btn-primary" type="button">View Suppliers</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--    <div class="row">-->
+    <!--      <div class="col-xxl-4 col-md-4">-->
+    <!--        <div class="card info-card sales-card">-->
+    <!--          <div class="card-body">-->
+    <!--            <h5 class="card-title">Clients <span>| Today</span></h5>-->
+
+    <!--            <div class="d-flex align-items-center">-->
+    <!--              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">-->
+    <!--                <i class="bi bi-cart"></i>-->
+    <!--              </div>-->
+    <!--              <div class="ps-3">-->
+    <!--                <h6>{{data?.category}}</h6>-->
+    <!--              </div>-->
+
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--          <div class="d-grid gap-2 px-3">-->
+    <!--            <button class="btn btn-primary" type="button">View Clients</button>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+
+    <!-- -->
+    <!--      <div class="col-xxl-4 col-md-4">-->
+    <!--        <div class="card info-card revenue-card">-->
+
+
+    <!--          <div class="card-body">-->
+    <!--            <h5 class="card-title">S-Categories <span>| Today</span></h5>-->
+
+    <!--            <div class="d-flex align-items-center">-->
+    <!--              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">-->
+    <!--                <i class="bi bi-currency-dollar"></i>-->
+    <!--              </div>-->
+    <!--              <div class="ps-3">-->
+    <!--                <h6>{{data?.product}}</h6>-->
+    <!--              </div>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--          <div class="d-grid gap-2 px-3">-->
+    <!--            <button class="btn btn-primary" type="button">View S-Categories</button>-->
+    <!--          </div>-->
+
+    <!--        </div>-->
+    <!--      </div>-->
+
+    <!--      <div class="col-xxl-4 col-md-4">-->
+    <!--        <div class="card info-card revenue-card">-->
+    <!--          <div class="card-body">-->
+    <!--            <h5 class="card-title">Suppliers <span>| Today</span></h5>-->
+
+    <!--            <div class="d-flex align-items-center">-->
+    <!--              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">-->
+    <!--                <i class="bi bi-currency-dollar"></i>-->
+    <!--              </div>-->
+    <!--              <div class="ps-3">-->
+    <!--                <h6>{{data?.facture}}</h6>-->
+    <!--              </div>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--          <div class="d-grid gap-2 px-3">-->
+    <!--            <button class="btn btn-primary" type="button">View Supplier</button>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+
+    <!--    </div>-->
+
+  </section>
+</main>

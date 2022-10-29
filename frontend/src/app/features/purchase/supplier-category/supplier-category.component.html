@@ -1,0 +1,105 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Manage Supplier Category</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+        <li class="breadcrumb-item active">Supplier Category</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{formType == FORM_TYPE.ADD ? 'Add' : 'Edit'}} Supplier Category</h5>
+
+            <form class="row mb-2" [formGroup]="supplierCategoryForm"
+                  *ngIf="supplierCategory$ |async as supplierCategory">
+
+              <div class="col-sm-12 pb-2">
+                <input type="text" name="category" id="addCategory" class="form-control" placeholder="Name"
+                       formControlName="name"
+                       [(ngModel)]="supplierCategory.name">
+                <div class="pt-1" *ngIf='supplierCategoryForm.controls["name"].invalid
+                                        && (supplierCategoryForm.controls["name"].dirty||
+                                        supplierCategoryForm.controls["name"].touched)'>
+                  <div *ngIf='supplierCategoryForm.controls["name"].errors.required' style="color: red;">
+                    This field is mandatory.
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-rigth mt-1">
+                <ng-container *ngIf="formType == FORM_TYPE.ADD; then add else edit"></ng-container>
+                <ng-template #add>
+                  <button (click)="addSupplierCategory()"
+                          [disabled]="!(supplierCategoryForm.valid && supplierCategoryForm.dirty)" type="submit"
+                          class="btn btn-primary me-2">Add
+                  </button>
+                </ng-template>
+                <ng-template #edit>
+                  <button (click)="updateSupplierCategory()"
+                          [disabled]="!(supplierCategoryForm.valid && supplierCategoryForm.dirty)" type="submit"
+                          class="btn btn-primary me-2">Update
+                  </button>
+                  <button (click)="cancelEdit()" type="submit" class="btn btn-warning" routerLink="../../purchase/supplier-category">
+                    <i
+                      class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                </ng-template>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="py-3 col-sm-5">
+                <form>
+                  <input [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}" type="text"
+                         placeholder="Search" class="form-control" title="Enter search keyword">
+                </form>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-bordered border-primary">
+                <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let c of supplierCategories$ | async | supplierCategoryFilter: searchValue">
+                  <th scope="row">{{c.name}}</th>
+
+                  <td><a (click)="editSupplierCategory(c._id)" class="btn btn-success btn-sm me-2"
+                         title="Edit Category"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a (click)="deleteSupplierCategory(c._id)" class="btn btn-danger btn-sm"
+                       title="Remove Category"><i class="bi bi-trash"></i></a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+
+

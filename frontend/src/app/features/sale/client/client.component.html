@@ -1,0 +1,152 @@
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Manage Client</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+        <li class="breadcrumb-item active">Client</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{formType == FORM_TYPE.ADD ? 'Add' : 'Edit'}} Client</h5>
+
+            <form class="row" [formGroup]="clientForm" *ngIf="client$ | async as client">
+              <div class="col-md-6 pb-2">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" formControlName="name" [(ngModel)]="client.name">
+                <div class="py-1" *ngIf='clientForm.controls["name"].invalid
+                                        && (clientForm.controls["name"].dirty||
+                                        clientForm.controls["name"].touched)'>
+                  <div *ngIf='clientForm.controls["name"].errors.required' style="color: red;">
+                    This field is mandatory.
+                  </div>
+                  <div *ngIf='clientForm.controls["name"].errors.pattern' style="color: red;">
+                    This field is invalid.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 pb-2">
+                <label class="form-label">Address</label>
+                <input type="text" class="form-control" formControlName="address" [(ngModel)]="client.address">
+                <div class="py-1" *ngIf='clientForm.controls["address"].invalid
+                                        && (clientForm.controls["address"].dirty||
+                                        clientForm.controls["address"].touched)'>
+                  <div *ngIf='clientForm.controls["address"].errors.required' style="color: red;">
+                    This field is mandatory.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 pb-2">
+                <label class="form-label">Contact Number</label>
+                <input type="tel" class="form-control" formControlName="contactNumber"
+                       [(ngModel)]="client.contactNumber">
+                <div class="py-1" *ngIf='clientForm.controls["contactNumber"].invalid
+                                        && (clientForm.controls["contactNumber"].dirty||
+                                        clientForm.controls["contactNumber"].touched)'>
+                  <div *ngIf='clientForm.controls["contactNumber"].errors.required' style="color: red;">
+                    This field is mandatory.
+                  </div>
+                  <div *ngIf='clientForm.controls["contactNumber"].errors.pattern' style="color: red;">
+                    This field is invalid.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 pb-2">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" formControlName="email" [(ngModel)]="client.email">
+                <div class="py-1" *ngIf='clientForm.controls["email"].invalid
+                                        && (clientForm.controls["email"].dirty||
+                                        clientForm.controls["email"].touched)'>
+                  <div *ngIf='clientForm.controls["email"].errors.required' style="color: red;">
+                    This field is mandatory.
+                  </div>
+                  <div *ngIf='clientForm.controls["email"].errors.pattern' style="color: red;">
+                    This field is invalid.
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-rigth pt-1">
+                <ng-container *ngIf="formType == FORM_TYPE.ADD; then add else edit"></ng-container>
+                <ng-template #add>
+                  <button type="submit" class="btn btn-primary me-2" (click)="addClient()"
+                          [disabled]="!(clientForm.valid && clientForm.dirty)">Add
+                  </button>
+                </ng-template>
+                <ng-template #edit>
+                  <button type="submit" class="btn btn-primary me-2" (click)="updateClient()"
+                          [disabled]="!(clientForm.valid && clientForm.dirty)">Update
+                  </button>
+                  <button (click)="cancelEdit()" type="submit" class="btn btn-warning" routerLink="../../sale/client"><i
+                    class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                </ng-template>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+
+            <div class="row">
+              <!-- <div class="py-3 col-6">
+                  <a (click)="handleAddAction()" class="btn btn-primary" title="Add role"><i
+                          class="fa fa-plus-circle" aria-hidden="true"></i></a>
+              </div> -->
+              <div class="py-3 col-sm-5">
+                <form>
+                  <input [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}" type="text"
+                         placeholder="Search" class="form-control" title="Enter search keyword">
+                </form>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-bordered border-primary">
+                <thead>
+                <tr>
+                  <th scope="col">Full Name</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Contact Number</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let supplier of clients$ | async | clientFilter: searchValue">
+                  <th scope="row">{{supplier.name}}</th>
+                  <td>{{supplier.address}}</td>
+                  <td>{{supplier.contactNumber}}</td>
+                  <td>{{supplier.email}}</td>
+                  <td><a (click)="editClient(supplier._id)" class="btn btn-success btn-sm me-2"
+                         title="Edit Supplier"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a (click)="deleteSupplier(supplier._id)" class="btn btn-danger btn-sm"
+                       title="Remove Supplier"><i class="bi bi-trash"></i></a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

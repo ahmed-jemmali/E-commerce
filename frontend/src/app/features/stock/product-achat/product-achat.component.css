@@ -1,0 +1,7 @@
+th,td {
+  white-space: nowrap;
+}
+.disabledDiv {
+  pointer-events: none;
+  opacity: 0.7;
+}

@@ -1,0 +1,63 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Role</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+                <li class="breadcrumb-item active">Role</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Create Role</h5>
+
+                        <form [formGroup]="addRoleForm">
+
+                            <div class="row mb-3">
+                                <!-- <label for="inputText" class="col-sm-2 col-form-label">Text</label> -->
+                                <div class="col-sm-12">
+                                    <input type="text" name="role" id="addRole" class="form-control" formControlName="role">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3" *ngIf='addRoleForm.controls["role"].invalid
+                                        && (addRoleForm.controls["role"].dirty||
+                                        addRoleForm.controls["role"].touched)'>
+                                <div *ngIf='addRoleForm.controls["role"].errors.required' style="color: red;">
+                                    Please, enter your role !
+                                </div>
+                                <div *ngIf='addRoleForm.controls["role"].errors.minlength' style="color: red;">
+                                    Role must have at least 3 character
+                                </div>
+                            </div>
+
+                            <span class="" id="msgError"></span>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-10">
+                                  <button (click)="addRole()" type="submit" [disabled]="!(addRoleForm.valid && addRoleForm.dirty)" class="btn btn-primary me-2">Submit</button>
+                                  <button type="submit" class="btn btn-warning" routerLink="/allRoles"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </section>
+
+</main><!-- End #main -->
+

@@ -1,0 +1,199 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Manage Order</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+        <li class="breadcrumb-item active">Purchase</li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="button-submit">
+    <button type="submit" class="btn btn-primary" (click)="submitAction()" [disabled]="validateSubmit()">Submit & Get
+      Facture
+    </button>
+  </div>
+
+  <section class="section pt-3">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Supplier Details</h5>
+
+            <form class="row g-3 pb-4" [formGroup]="manageAchatForm" >
+
+              <div class="col-md-6">
+                <label class="form-label">Category *</label>
+                <select class="form-select " data-live-search="true" formControlName="supplierCategory"
+                        name="supplierCategory" (ngModelChange)="getSupplierByCategory($event)">
+                  <option [ngValue]="null">Choose Category...</option>
+                  <option *ngFor="let c of supplierCategories$ | async" [ngValue]="c">{{c?.name}}</option>
+                </select>
+                <div class="pt-1" style="margin-bottom: -10px;" *ngIf='manageAchatForm.controls["supplierCategory"].invalid
+                                        && (manageAchatForm.controls["supplierCategory"].dirty||
+                                        manageAchatForm.controls["supplierCategory"].touched)'>
+                  <div *ngIf='manageAchatForm.controls["supplierCategory"].errors.required' style="color: red;">
+                    This field is mandatory.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Email *</label>
+                <select class="form-select " data-live-search="true" formControlName="supplier"
+                        name="supplier" (ngModelChange)="getSupplierDetails($event)">
+                  <option [ngValue]="null">Choose Supplier...</option>
+                  <option *ngFor="let s of suppliers$ | async" [ngValue]="s">{{s?.email}}</option>
+                </select>
+                <div class="pt-1" style="margin-bottom: -10px;" *ngIf='manageAchatForm.controls["supplier"].invalid
+                                        && (manageAchatForm.controls["supplier"].dirty||
+                                        manageAchatForm.controls["supplier"].touched)'>
+                  <div *ngIf='manageAchatForm.controls["supplier"].errors.required' style="color: red;">
+                    This field is mandatory.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" formControlName="name" readonly>
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Address</label>
+                <input type="text" class="form-control" formControlName="address" readonly>
+              </div>
+
+              <div class="col-md-4 ">
+                <label class="form-label">Contact Number</label>
+                <input type="tel" class="form-control" formControlName="contactNumber" readonly>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-3">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Select Product</h5>
+
+            <form class="row g-3 " [formGroup]="manageAchatForm">
+
+              <div class="col-md-6">
+                <label class="form-label">Category *</label>
+                <select class="form-select " data-live-search="true" formControlName="category"
+                        name="category" (ngModelChange)="getProductAchatsByCategory($event)">
+                  <option [ngValue]="null" disabled>Choose Category...</option>
+                  <option *ngFor="let c of categories$ | async" [ngValue]="c">{{c?.name}}</option>
+                </select>
+                <div class="pt-1" style="margin-bottom: -10px;" *ngIf='manageAchatForm.controls["category"].invalid
+                                        && (manageAchatForm.controls["category"].dirty||
+                                        manageAchatForm.controls["category"].touched)'>
+                  <div *ngIf='manageAchatForm.controls["category"].errors.required' style="color: red;">
+                    This field is mandatory.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Product *</label>
+                <select class="form-select " data-live-search="true" formControlName="product"
+                        name="product" (ngModelChange)="getProductAchatDetails($event)">
+                  <option [ngValue]="null" >Choose Product...</option>
+                  <option *ngFor="let p of productAchats$ | async" [ngValue]="p">{{p?.name}}</option>
+                </select>
+                <div class="pt-1" style="margin-bottom: -10px;" *ngIf='manageAchatForm.controls["product"].invalid
+                                        && (manageAchatForm.controls["product"].dirty||
+                                        manageAchatForm.controls["product"].touched)'>
+                  <div *ngIf='manageAchatForm.controls["product"].errors.required' style="color: red;">
+                    This field is mandatory.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Quantity *</label>
+                <input type="text" class="form-control" formControlName="quantity" (keyup)="setQuantity($event)" #inputElement>
+                <div class="pt-1" style="margin-bottom: -10px;" *ngIf='manageAchatForm.controls["quantity"].invalid
+                                        && (manageAchatForm.controls["quantity"].dirty)'>
+                  <div *ngIf='manageAchatForm.controls["quantity"].errors.required' style="color: red;">
+                    This field is mandatory.
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-md-6">
+                <label class="form-label">Payment Method *</label>
+                <select class="form-select " data-live-search="true" name="categoryId" formControlName="paymentMethod">
+                  <!-- <option value=""  selected>Choose Category...</option> -->
+                  <option [ngValue]="null">Choose Payment Method...</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Credit Card">Credit Card</option>
+                  <option value="Debit Card">Debit Card</option>
+                </select>
+                <div class="pt-1" *ngIf='manageAchatForm.controls["paymentMethod"].invalid
+                                        && (manageAchatForm.controls["paymentMethod"].dirty||
+                                        manageAchatForm.controls["paymentMethod"].touched)'>
+                  <div *ngIf='manageAchatForm.controls["paymentMethod"].errors.required' style="color: red;">
+                    This field is mandatory.
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-rigth">
+                <button type="submit" class="btn btn-primary" (click)="add()" [disabled]="validateProductAdd()">Add</button>
+                <button type="submit" class="btn btn-danger button-total">Total Product : {{totalProduct}}</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Products Details</h5>
+            <div class="table-responsive">
+              <table class="table table-bordered border-primary">
+                <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Payment Method</th>
+                  <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let d of dataSource,let i=index;">
+                  <th scope="row">{{d.name}}</th>
+                  <th scope="row">{{d.category}}</th>
+                  <td>{{d.quantity}}</td>
+                  <td>{{d.paymentMethod}}</td>
+                  <td><a class="btn btn-danger btn-sm" (click)="handleDeleteAction(i,d)"
+                         title="Remove Product"><i class="bi bi-trash"></i></a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

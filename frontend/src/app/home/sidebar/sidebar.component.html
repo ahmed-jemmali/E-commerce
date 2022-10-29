@@ -1,0 +1,176 @@
+<aside id="sidebar" class="sidebar">
+
+  <ul class="sidebar-nav links" id="sidebar-nav">
+
+    <li class="nav-item active">
+      <a routerLink="./dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+         class="nav-link collapsed">
+        <i class="bi bi-grid"></i><span>Dashboard</span>
+      </a>
+    </li>
+
+    <!--<li class="nav-item">
+      <a routerLink="./dashboard"
+         routerLinkActive="active"
+         class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse">
+        <mat-icon>grid_view</mat-icon>
+        <mat-label>Dashboard</mat-label>
+      </a>
+    </li>-->
+
+    <li class="nav-item">
+      <a routerLink="./admin/all-users" routerLinkActive="active"
+         *ngIf="checkRole(['super admin'],roles)"
+         class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse">
+        <i class="fa fa-user-circle-o" aria-hidden="true"></i><span>User</span>
+      </a>
+      <a *ngIf="!checkRole(['super admin'],roles)" [class.disabled]="true"
+         class="nav-link collapsed " data-bs-target="#components-nav" data-bs-toggle="collapse">
+        <i class="fa fa-user-circle-o" aria-hidden="true"></i><span>User</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="./admin/all-roles" routerLinkActive="active"
+         *ngIf="checkRole(['super admin'],roles)"
+         class="nav-link collapsed " data-bs-target="#tables-nav" data-bs-toggle="collapse">
+        <i class="fa fa-address-card-o" aria-hidden="true"></i><span>Role</span>
+      </a>
+      <a *ngIf="!checkRole(['super admin'],roles)" [class.disabled]="true"
+         class="nav-link collapsed " data-bs-target="#tables-nav" data-bs-toggle="collapse">
+        <i class="fa fa-address-card-o" aria-hidden="true"></i><span>Role</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a *ngIf="checkRole(['super admin','stock manager'],roles)"
+         class="nav-link collapsed " data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Stock</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <a *ngIf="!checkRole(['super admin','stock manager'],roles)" [class.disabled]="true"
+         class="nav-link collapsed " data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Stock</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a routerLink="./stock/category" routerLinkActive="active">
+            <i class="bi bi-circle"></i><span>Product Category</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="./stock/product/sale" routerLinkActive="active">
+            <i class="bi bi-circle"></i><span>Sale Product</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="./stock/product/purchase" routerLinkActive="active">
+            <i class="bi bi-circle"></i><span>Purchase Product</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="./sale/client" routerLinkActive="active"
+         *ngIf="checkRole(['super admin','sales manager'],roles)"
+         class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse">
+        <i class="fa fa-users" aria-hidden="true"></i><span>Client</span>
+      </a>
+      <a *ngIf="!checkRole(['super admin','sales manager'],roles)" [class.disabled]="true"
+         class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse">
+        <i class="fa fa-users" aria-hidden="true"></i><span>Client</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="./sale" routerLinkActive="active"
+         *ngIf="checkRole(['super admin','sales manager'],roles)"
+         class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse">
+        <i class="bi bi-bar-chart"></i><span>Sale</span>
+      </a>
+      <a *ngIf="!checkRole(['super admin','sales manager'],roles)" [class.disabled]="true"
+         class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse">
+        <i class="bi bi-bar-chart"></i><span>Sale</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="./invoice/all/sale" routerLinkActive="active"
+         *ngIf="checkRole(['super admin','sales manager'],roles)"
+         class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse">
+        <i class="bi bi-layout-text-window-reverse"></i><span>Sale Invoices</span>
+      </a>
+      <a *ngIf="!checkRole(['super admin','sales manager'],roles)" [class.disabled]="true"
+         class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse">
+        <i class="bi bi-layout-text-window-reverse"></i><span>Sale Invoices</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="./purchase/supplier-category" routerLinkActive="active"
+         *ngIf="checkRole(['super admin','purchase manager'],roles)"
+         class="nav-link collapsed " data-bs-target="#icons-nav" data-bs-toggle="collapse">
+        <i class="fa fa-list-alt" aria-hidden="true"></i><span>Supplier Category</span>
+      </a>
+      <a *ngIf="!checkRole(['super admin','purchase manager'],roles)" [class.disabled]="true"
+         class="nav-link collapsed " data-bs-target="#icons-nav" data-bs-toggle="collapse">
+        <i class="fa fa-list-alt" aria-hidden="true"></i><span>Supplier Category</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="./purchase/supplier" routerLinkActive="active"
+         *ngIf="checkRole(['super admin','purchase manager'],roles)"
+         class="nav-link collapsed " data-bs-target="#icons-nav" data-bs-toggle="collapse">
+        <i class="fa fa-users" aria-hidden="true"></i><span>Supplier</span>
+      </a>
+      <a *ngIf="!checkRole(['super admin','purchase manager'],roles)" [class.disabled]="true"
+         class="nav-link collapsed " data-bs-target="#icons-nav" data-bs-toggle="collapse">
+        <i class="fa fa-users" aria-hidden="true"></i><span>Supplier</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="./purchase" routerLinkActive="active"
+         *ngIf="checkRole(['super admin','purchase manager'],roles)"
+         class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse">
+        <i class="bi bi-bar-chart"></i><span>Purchase</span>
+      </a>
+      <a *ngIf="!checkRole(['super admin','purchase manager'],roles)" [class.disabled]="true"
+         class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse">
+        <i class="bi bi-bar-chart"></i><span>Purchase</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="./invoice/all/purchase" routerLinkActive="active"
+         *ngIf="checkRole(['super admin','purchase manager'],roles)"
+         class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse">
+        <i class="bi bi-layout-text-window-reverse"></i><span>Purchase Invoices</span>
+      </a>
+      <a *ngIf="!checkRole(['super admin','purchase manager'],roles)" [class.disabled]="true"
+         class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse">
+        <i class="bi bi-layout-text-window-reverse"></i><span>Purchase Invoices</span>
+      </a>
+    </li>
+
+  </ul>
+
+</aside>
+
+<!--
+<script>
+  let links = document.querySelectorAll(".links li");
+  links.forEach(li => {
+    li.addEventListener("click", () => {
+      resetLinks();
+      li.classList.add("active");
+    })
+  })
+
+  function resetLinks() {
+    links.forEach(li => {
+      li.classList.remove("active");
+    })
+  }
+</script>-->

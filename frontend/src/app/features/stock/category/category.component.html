@@ -1,0 +1,104 @@
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Manage Product Category</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+        <li class="breadcrumb-item">Stock</li>
+        <li class="breadcrumb-item active">Product Category</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{formType == FORM_TYPE.ADD ? 'Add' : 'Edit'}} Product Category</h5>
+            <form class="row" [formGroup]="categoryForm" *ngIf="category$ |async as category">
+
+              <div class="col-sm-12 mb-2">
+                <input type="text" name="category" id="addCategory" placeholder="Name" class="form-control"
+                       formControlName="name"
+                       [(ngModel)]="category.name">
+                <div class="pt-1" *ngIf='categoryForm.controls["name"].invalid
+                                        && (categoryForm.controls["name"].dirty||
+                                        categoryForm.controls["name"].touched)'>
+                  <div *ngIf='categoryForm.controls["name"].errors.required' style="color: red;">
+                    This field is mandatory.
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="text-rigth mt-1">
+                <ng-container *ngIf="formType==FORM_TYPE.ADD ;then add else edit"></ng-container>
+                <ng-template #add>
+                  <button (click)="addCategory()" [disabled]="!(categoryForm.valid && categoryForm.dirty)"
+                          type="submit" class="btn btn-primary me-2">Add
+                  </button>
+                </ng-template>
+                <ng-template #edit>
+                  <button (click)="updateCategory()" [disabled]="!(categoryForm.valid && categoryForm.dirty)"
+                          type="submit" class="btn btn-primary me-2">Update
+                  </button>
+                  <button (click)="cancelEdit()" type="submit" class="btn btn-warning" routerLink="../../stock/category"><i
+                    class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                </ng-template>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <!-- <div class="py-3 col-6">
+                  <a (click)="handleAddAction()" class="btn btn-primary" title="Add role"><i
+                          class="fa fa-plus-circle" aria-hidden="true"></i></a>
+              </div> -->
+              <div class="py-3 col-sm-5">
+                <form>
+                  <input [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}" type="text" placeholder="Search" class="form-control" title="Enter search keyword">
+                </form>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-bordered border-primary">
+                <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let category of categories$ |async | productCategoryFilter:searchValue ">
+                  <th scope="row">{{category.name}}</th>
+
+                  <td><a (click)="editCategory(category._id)" class="btn btn-success btn-sm me-2"
+                         title="Edit Category"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a (click)="deleteCategory(category._id)" class="btn btn-danger btn-sm"
+                       title="Remove Category"><i class="bi bi-trash"></i></a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+
+

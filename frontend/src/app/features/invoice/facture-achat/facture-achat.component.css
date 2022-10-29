@@ -1,0 +1,11 @@
+.botton{
+  float:right;
+  margin-top: -44px;
+}
+
+.table-responsive{
+  clear: both;
+}
+th,td {
+  white-space: nowrap;
+}

@@ -1,0 +1,9 @@
+th,td {
+  white-space: nowrap;
+}
+
+#responsive{
+  max-width: 300px;
+  overflow: scroll;
+  text-overflow: ellipsis ellipsis;
+}

@@ -1,0 +1,41 @@
+{
+  "name": "erp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular2-jwt": "^0.2.3",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "html-pdf": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
+    "mailgun-js": "^0.22.0",
+    "mongoose": "^6.2.3",
+    "multer": "^1.4.4",
+    "nodemailer": "^6.7.3",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
+    "path": "^0.12.7",
+    "rxjs": "^7.5.4",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  },
+  "engines": {
+    "node": "14.15.5",
+    "npm": "6.14.16"
+  }
+}
